@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Лого</td>
+            <td>
+                <form method="post" id="form9" enctype="multipart/form-data">
+                        <input type="file" name="logo">
+                        <button type="submit">rep</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><img id="img1" src=""></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button type="submit">ok</button></td>
+        </tr>
+    </table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#form9").submit(function (e) {
+        e.preventDefault();
+        var serializedData = $(this).serialize();
+         $.ajax({
+             type: 'POST',
+             dataType: 'json',
+             url: "/uploadImage/",
+             data: serializedData,
+             success: function (d) {
+                 if(d['status']==true){
+                     alert("ok");
+                     alert(d['img_url'])
+                 }else{
+                     var errors = d['errors'];
+                     alert(errors);
+                 }
+             },
+             error: function (d){
+                 alert("не заполнено");
+             }
+         });
+    });
+</script>
+</body>
+</html>

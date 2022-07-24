@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <td>last name</td>
+        <td>first name</td>
+        <td>email</td>
+        <td>login</td>
+        <td>password</td>
+    </tr>
+    {% for ur in users %}
+    <tr>
+        <td>{{ur.last_name}}</td>
+        <td>{{ur.first_name}}</td>
+        <td>{{ur.email}}</td>
+        <td>{{ur.login}}</td>
+        <td>{{ur.password}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% if users.has_previous %}
+ <a href="?page={{ users.previous_page_number }}">Previous</a>
+{% else %}
+  <a>Previous</a>
+{% endif %}
+
+{% for i in users.paginator.page_range %}
+  {% if users.number == i %}
+    <a>{{ i }} </a>
+  {% else %}
+    <a href="?page={{ i }}">{{ i }}</a>
+  {% endif %}
+{% endfor %}
+
+{% if users.has_next %}
+  <a href="?page={{ users.next_page_number }}">Next</a>
+{% else %}
+  <a>Next</a>
+{% endif %}
+
+</body>
+</html>

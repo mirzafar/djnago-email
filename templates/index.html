@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Helloo</h1>
+<form action="/" method="post" id="form1">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" name="email"></td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td><input type="text" name="password"></td>
+        </tr>
+        <tr>
+            <td><input type="hidden" name="action" value="send_email"></td>
+            <td><button type="submit"> ok </button></td>
+        </tr>
+    </table>
+
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#form1").submit(function (e) {
+        e.preventDefault();
+        var serializedData = $(this).serialize();
+         $.ajax({
+             type: 'POST',
+             dataType: 'json',
+             url: $("#form1").attr("action"),
+             data: serializedData,
+             success: function (d) {
+                 if(d['status']==true){
+                     alert("ok");
+                     location.reload();
+                 }else{
+                     var errors = d['errors'];
+                     alert(errors);
+                 }
+             },
+             error: function (d){
+                 alert("не заполнено");
+             }
+         });
+    });
+</script>
+
+
+</body>
+</html>
